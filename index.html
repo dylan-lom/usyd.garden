@@ -28,22 +28,24 @@
       article { min-height: 80vh; }
       .hidden { display: none; }
       #display, #display > * { height: 100%; width: 100%; }
+      .nowrap { white-space: nowrap; }
     </style>
 
     <script>
       function display(node) {
-        var target = document.querySelector('#display')
+        const target = document.querySelector('#display')
         target.innerHTML = ''
         target.appendChild(node)
       }
 
       function embed(src) {
-        var container = document.createElement('div')
+        const container = document.createElement('div')
 
-        var spinner = document.createElement('div')
-        spinner.textContent = 'Loading...'
+        const spinner = document.createElement('div')
+        const host = new URL(src).host
+        spinner.innerHTML = `Loading <a href="${src}" target="_blank">${host}</a>...`
 
-        var iframe = document.createElement('iframe')
+        const iframe = document.createElement('iframe')
         iframe.classList.add('hidden')
         iframe.src = src
         iframe.addEventListener('load', function() {
@@ -56,27 +58,31 @@
         return container
       }
 
-      function countdown(day, hour) {
-        var target = document.createElement('p')
-        var until = timeUntil(day, hour)
-        if (until.day == 0 && until.hour == 0)
+      function countdown(day, startHour, endHour) {
+        const target = document.createElement('p')
+
+        const now = new Date()
+        let dd = day - now.getDay()
+        if (dd < 0) dd += 7
+
+        let dh = startHour - now.getHours()
+        if (dd == 0
+            && dh > (startHour - endHour)
+            && dh < 0
+        ) dh = 0
+        if (dd == 0 && dh < 0) dd += 7
+        if (dh < 0) dh += 24
+
+
+        if (dd == 0 && dh <= (endHour - startHour))
           target.innerText = 'Right Now!'
         else
-          target.innerText = 'In ' + (until.day ? until.day + ' days and ' : '')
-              + (until.hour + ' hours.')
+          target.innerText = 'In ' + (dd ? dd + ' days and ' : '')
+              + (dh + ' hours.')
+
         return target
       }
 
-      function timeUntil(day, hour) {
-        var now = new Date()
-        var dayDiff = day - now.getDay()
-        if (dayDiff < 0) dayDiff += 7
-
-        var hourDiff = hour - now.getHours()
-        if (hourDiff < 0) hourDiff += 24
-
-        return { day: dayDiff, hour: hourDiff }
-      }
     </script>
   </head>
   <body>
@@ -84,22 +90,22 @@
       <article>
         <h1>🌼USYD Community Garden🌸</h1>
         <p>
-          Come visit us at USYD's Camperdown campus on <strong>Maze Cr., opp. Wilkinson Building</strong> (<input
+          Come visit us at USYD's Camperdown campus on <strong>Maze Cr., opp. Wilkinson Building</strong> <span class="nowrap">(<input
             type="button"
             value="Google Maps"
             onclick="display(embed('https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d657.1885803158959!2d151.19127927063974!3d-33.889068648873476!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x6b12b11f876ec363%3A0xc442b6451986a587!2sUSYD%20Community%20Garden!5e0!3m2!1sen!2sau!4v1751365448940!5m2!1sen!2sau'))"
           >).
         <p>
         <p>
-          If you're interested in getting involved, come and say hi on <strong>Wednesday mornings</strong> (<input
+          If you're interested in getting involved, come and say hi on <strong>Wednesday mornings</strong> <span class="nowrap">(<input
             type="button"
             value="9AM-12PM"
-            onclick="display(countdown(3, 9))"
-          >) and <strong>Sunday afternoons</strong> (<input
+            onclick="display(countdown(3, 9, 12))"
+          >)</span> and <strong>Sunday afternoons</strong> <span class="nowrap">(<input
             type="button"
             value="1-4PM"
-            onclick="display(countdown(0, 13))"
-          >), when we have group gardening sessions!
+            onclick="display(countdown(0, 13, 16))"
+          >)</span>, when we have group gardening sessions!
         </p>
         <p>
           See what we've been up to on our
