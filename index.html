@@ -74,7 +74,7 @@
         if (dh < 0) dh += 24
 
 
-        if (dd == 0 && dh <= (endHour - startHour))
+        if (dd == 0 && dh == 0)
           target.innerText = 'Right Now!'
         else
           target.innerText = 'In ' + (dd > 1 ? (dd - 1) + ' days and ' : '')
