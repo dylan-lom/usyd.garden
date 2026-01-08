@@ -62,39 +62,39 @@
     <script>
       const gallery = {
         '2023': [
-          { src: "/resx/2023.06.hoophouse.jpg", title: "June 2023, Hoophouse/Zone 0" },
-          { src: "/resx/2023.07.zone1.jpg", title: "July 2023, Zone 1" },
-          { src: "/resx/2023.09.zone1-glasshouse.jpg", title: "September 2023, Zone 1 with view of Glasshouse (G07)" },
-          { src: "/resx/2023.11.zone2-pond.jpg", title: "November 2023, Zone 2 Pond, clay base" },
-          { src: "/resx/2023.12.zone2-pond.jpg", title: "December 2023, Zone 2 Pond" },
+          { src: "./resx/2023.06.hoophouse.jpg", title: "June 2023, Hoophouse/Zone 0" },
+          { src: "./resx/2023.07.zone1.jpg", title: "July 2023, Zone 1" },
+          { src: "./resx/2023.09.zone1-glasshouse.jpg", title: "September 2023, Zone 1 with view of Glasshouse (G07)" },
+          { src: "./resx/2023.11.zone2-pond.jpg", title: "November 2023, Zone 2 Pond, clay base" },
+          { src: "./resx/2023.12.zone2-pond.jpg", title: "December 2023, Zone 2 Pond" },
         ],
         '2024': [
-          { src: "/resx/2024.02.hoophouse-glasshouse.jpg", title: "TODO: February 2024, View of Glasshouse from Hoophouse" },
-          { src: "/resx/2024.03.glasshouse.jpg", title: "March 2024, Glasshouse lower level" },
-          { src: "/resx/2024.11.glasshouse.jpg", title: "March 2024, Glasshouse upper level" },
-          { src: "/resx/2024.07.zone1-herb-bed.jpg", title: "July 2024, Zone 1 Herb Bed" },
-          { src: "/resx/2024.08.zone1.jpg", title: "TODO: August 2024, Zone 1" },
-          { src: "/resx/2024.08.zone1-compost-airation.jpg", title: "TODO: August 2024, Zone 1 Compost Static Airation System" },
-          { src: "/resx/2024.09.zone1.jpg", title: "TODO: August 2024, Zone 1" },
+          { src: "./resx/2024.02.hoophouse-glasshouse.jpg", title: "TODO: February 2024, View of Glasshouse from Hoophouse" },
+          { src: "./resx/2024.03.glasshouse.jpg", title: "March 2024, Glasshouse lower level" },
+          { src: "./resx/2024.11.glasshouse.jpg", title: "March 2024, Glasshouse upper level" },
+          { src: "./resx/2024.07.zone1-herb-bed.jpg", title: "July 2024, Zone 1 Herb Bed" },
+          { src: "./resx/2024.08.zone1.jpg", title: "TODO: August 2024, Zone 1" },
+          { src: "./resx/2024.08.zone1-compost-airation.jpg", title: "TODO: August 2024, Zone 1 Compost Static Airation System" },
+          { src: "./resx/2024.09.zone1.jpg", title: "TODO: August 2024, Zone 1" },
         ],
         '2025': [
-          { src: "/resx/2025.02.zone1.jpg", title: "TODO: February 2025, Zone 1" },
-          { src: "/resx/2025.06.hoophouse.jpg", title: "June 2025, Hoophouse" },
-          { src: "/resx/2025.06.zone1-herb-bed.jpg", title: "June 2025, Zone 1 Herb Bed" },
-          { src: "/resx/2025.06.zone1-pond.jpg", title: "June 2025, Zone 1 Pond" },
-          { src: "/resx/2025.06.zone2.jpg", title: "June 2025, Zone 2" },
-          { src: "/resx/2025.06.zone2-pond.jpg", title: "June 2025, Zone 2 Pond" },
-          { src: "/resx/2025.11.beehive.jpg", title: "November 2025, Beehive" },
-          { src: "/resx/2025.11.beehive-hoophouse.jpg", title: "November 2025, Beehive" },
-          { src: "/resx/2025.11.zone1-herb-bed.jpg", title: "November 2025, Zone 1 Herb Bed" },
-          { src: "/resx/2025.11.zone2.jpg", title: "November 2025, Zone 2" },
-          { src: "/resx/2025.11.zone2-pond.jpg", title: "November 2025, Zone 2 Pond" },
-          { src: "/resx/2025.12.zone1.jpg", title: "December 2025, Zone 1" },
+          { src: "./resx/2025.02.zone1.jpg", title: "TODO: February 2025, Zone 1" },
+          { src: "./resx/2025.06.hoophouse.jpg", title: "June 2025, Hoophouse" },
+          { src: "./resx/2025.06.zone1-herb-bed.jpg", title: "June 2025, Zone 1 Herb Bed" },
+          { src: "./resx/2025.06.zone1-pond.jpg", title: "June 2025, Zone 1 Pond" },
+          { src: "./resx/2025.06.zone2.jpg", title: "June 2025, Zone 2" },
+          { src: "./resx/2025.06.zone2-pond.jpg", title: "June 2025, Zone 2 Pond" },
+          { src: "./resx/2025.11.beehive.jpg", title: "November 2025, Beehive" },
+          { src: "./resx/2025.11.beehive-hoophouse.jpg", title: "November 2025, Beehive" },
+          { src: "./resx/2025.11.zone1-herb-bed.jpg", title: "November 2025, Zone 1 Herb Bed" },
+          { src: "./resx/2025.11.zone2.jpg", title: "November 2025, Zone 2" },
+          { src: "./resx/2025.11.zone2-pond.jpg", title: "November 2025, Zone 2 Pond" },
+          { src: "./resx/2025.12.zone1.jpg", title: "December 2025, Zone 1" },
         ],
       }
 
       function generateGallery(target) {
-        const toThumb = (src) => src.replace(/(.*)(\..+)$/, '$1.thumb$2')
+        const toThumb = (src) => src.replace(/(.*)(\..+)$/, '$1.thumb.jpg')
 
         const html = Object.entries(gallery).map(([ title, imgs ]) => {
           const imgsHtml = imgs.map(({ src, title }) => `<div class="center-children">
