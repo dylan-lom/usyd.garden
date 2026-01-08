@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>🌼USYD Community Garden🌸</title>
+    <style>
+      @import url('et-book/index.css');
+      body { font-family: et-book, serif; font-size: large; }
+      .hsplit {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        padding: 1rem;
+      }
+
+      iframe { height: 100%; width: 100%; border: none; }
+      input[type="button"] {
+        background: none;
+        border: none;
+        color: blue;
+        text-decoration: underline;
+        padding: 0;
+        font-family: inherit;
+        font-size: inherit;
+      }
+
+      article { min-height: 80vh; }
+      .hidden { display: none !important; }
+      #display, #display > * { height: 100%; width: 100%; }
+      .nowrap { white-space: nowrap; }
+
+      .grid-4 { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 1rem; }
+/*      .grid-4 > * { border: 1px solid #ccc;  padding: 1rem; }*/
+      .grid-4 h2 { text-align: center; grid-column: span 4; border: none; }
+      .grid-4 img { max-width: 100%; max-height: 600px; }
+      .caption { font-style: italic; margin-top: 0; }
+
+      #modal {
+        z-index: 10;
+        position: fixed;
+        inset: 0;
+        height: 100%;
+        width: 100%;
+        background-color: #000A;
+      }
+      #modal img { max-width: 80%; max-height: 80%;}
+     .float-right { float: right; }
+     .padding-2rem { padding: 2rem; }
+     .noscroll { overflow: hidden; }
+     .center-children {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+
+     }
+     .notext { color: transparent; }
+     *[onclick]:hover { cursor: pointer; }
+
+    </style>
+
+    <script>
+      const gallery = {
+        '2023': [
+          { src: "/resx/2023.06.hoophouse.jpg", title: "June 2023, Hoophouse/Zone 0" },
+          { src: "/resx/2023.07.zone1.jpg", title: "July 2023, Zone 1" },
+          { src: "/resx/2023.09.zone1-glasshouse.jpg", title: "September 2023, Zone 1 with view of Glasshouse (G07)" },
+          { src: "/resx/2023.11.zone2-pond.jpg", title: "November 2023, Zone 2 Pond, clay base" },
+          { src: "/resx/2023.12.zone2-pond.jpg", title: "December 2023, Zone 2 Pond" },
+        ],
+        '2024': [
+          { src: "/resx/2024.02.hoophouse-glasshouse.jpg", title: "TODO: February 2024, View of Glasshouse from Hoophouse" },
+          { src: "/resx/2024.03.glasshouse.jpg", title: "March 2024, Glasshouse lower level" },
+          { src: "/resx/2024.11.glasshouse.jpg", title: "March 2024, Glasshouse upper level" },
+          { src: "/resx/2024.07.zone1-herb-bed.jpg", title: "July 2024, Zone 1 Herb Bed" },
+          { src: "/resx/2024.08.zone1.jpg", title: "TODO: August 2024, Zone 1" },
+          { src: "/resx/2024.08.zone1-compost-airation.jpg", title: "TODO: August 2024, Zone 1 Compost Static Airation System" },
+          { src: "/resx/2024.09.zone1.jpg", title: "TODO: August 2024, Zone 1" },
+        ],
+        '2025': [
+          { src: "/resx/2025.02.zone1.jpg", title: "TODO: February 2025, Zone 1" },
+          { src: "/resx/2025.06.hoophouse.jpg", title: "June 2025, Hoophouse" },
+          { src: "/resx/2025.06.zone1-herb-bed.jpg", title: "June 2025, Zone 1 Herb Bed" },
+          { src: "/resx/2025.06.zone1-pond.jpg", title: "June 2025, Zone 1 Pond" },
+          { src: "/resx/2025.06.zone2.jpg", title: "June 2025, Zone 2" },
+          { src: "/resx/2025.06.zone2-pond.jpg", title: "June 2025, Zone 2 Pond" },
+          { src: "/resx/2025.11.beehive.jpg", title: "November 2025, Beehive" },
+          { src: "/resx/2025.11.beehive-hoophouse.jpg", title: "November 2025, Beehive" },
+          { src: "/resx/2025.11.zone1-herb-bed.jpg", title: "November 2025, Zone 1 Herb Bed" },
+          { src: "/resx/2025.11.zone2.jpg", title: "November 2025, Zone 2" },
+          { src: "/resx/2025.11.zone2-pond.jpg", title: "November 2025, Zone 2 Pond" },
+          { src: "/resx/2025.12.zone1.jpg", title: "December 2025, Zone 1" },
+        ],
+      }
+
+      function generateGallery(target) {
+        const toThumb = (src) => src.replace(/(.*)(\..+)$/, '$1.thumb$2')
+
+        const html = Object.entries(gallery).map(([ title, imgs ]) => {
+          const imgsHtml = imgs.map(({ src, title }) => `<div class="center-children">
+            <img class="preview" src="${toThumb(src)}" alt="${title}" title="${title}" onClick="showModal('${src}', '${title}')">
+            <p class="caption">${title}</p>
+          </div>`).join('\n')
+          return `<h2>${title}</h2>
+            ${imgsHtml}`
+        }).join('\n')
+
+        target.innerHTML += html
+      }
+
+      function showModal(src, title) {
+        const modal = document.querySelector('#modal')
+        const img = modal.querySelector('img')
+        const caption = modal.querySelector('.caption')
+
+        img.src = ''
+        setTimeout(() => {
+          img.src = src
+          img.alt = title
+          img.title = title
+          // caption.textContent = title
+
+          modal.classList.remove('hidden')
+          document.body.classList.add('noscroll')
+        }, 0)
+      }
+
+      function hideModal() {
+        const modal = document.querySelector('#modal')
+        modal.classList.add('hidden')
+        document.body.classList.remove('noscroll')
+      }
+
+    </script>
+  </head>
+  <body>
+    <article>
+      <div id="gallery" class="grid-4"></div>
+      <script>document.addEventListener('DOMContentLoaded', () => generateGallery(document.querySelector('#gallery')))</script>
+      <div id="modal" class="hidden center-children" onclick="hideModal()">
+        <img>
+        <p class="caption"></p>
+      </div>
+    </article>
+
+      <article>
+        <div id="display"></div>
+      </article>
+    </div>
+  </body>
+
+</html>
